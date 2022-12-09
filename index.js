@@ -5,6 +5,7 @@ const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
 const errorHandle = require("./middleware/errormiddleware");
+const port = process.env.PORT;
 connectFun();
 
 app.use(cors());
@@ -20,7 +21,7 @@ const io = new Server(server, {
   },
 });
 
-// app.use("/getMessages", require("./routes/routes"));
+app.use("/getMessages", require("./routes/routes"));
 app.use("/setMessage", require("./routes/routes"));
 
 io.on("connection", (socket) => {
@@ -34,6 +35,6 @@ io.on("connection", (socket) => {
   });
 });
 app.use(errorHandle);
-server.listen(3001, () => {
-  console.log("SERVER IS RUNNING ON PORT " + 3001);
+server.listen(port, () => {
+  console.log(`SERVER IS RUNNING ON PORT  http://localhost:${port}`);
 });
